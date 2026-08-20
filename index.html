@@ -1,1 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Z Concepts — Zachary's Investing & Trading Concepts</title>
+<meta name="description" content="A slower, steadier perspective on easing your way into potential participation in financial markets. Educational content only — not financial advice.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#070C18;
+    --panel:#0C1426;
+    --panel-2:#101B33;
+    --line:#1D2C4E;
+    --cobalt:#3D6BFF;
+    --cobalt-soft:#7C9BFF;
+    --text:#E8ECF6;
+    --muted:#8B97B4;
+    --up:#37C98B;
+    --down:#E0596B;
+    --gap:#4A5878;
+    --radius:10px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:'Cormorant Garamond', Georgia, serif;
+    font-size:19px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'Share Tech Mono', monospace;}
+  a{color:var(--cobalt-soft);}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--cobalt-soft);outline-offset:3px;}
 
+  /* ---------- top ticker bar ---------- */
+  .tickerbar{
+    border-bottom:1px solid var(--line);
+    background:var(--panel);
+    overflow:hidden;
+    white-space:nowrap;
+    font-family:'Share Tech Mono', monospace;
+    font-size:12px;
+    letter-spacing:.08em;
+    color:var(--muted);
+    padding:8px 0;
+  }
+  .tickerbar span{display:inline-block;padding:0 28px;}
+  .tickerbar .u{color:var(--up);}
+  .tickerbar .d{color:var(--down);}
+  .ticker-inner{display:inline-block;animation:slide 42s linear infinite;}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ---------- nav ---------- */
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    max-width:1060px;margin:0 auto;padding:22px 24px;
+  }
+  .brand{font-family:'Share Tech Mono', monospace;font-size:15px;letter-spacing:.24em;color:var(--text);text-decoration:none;}
+  .brand b{color:var(--cobalt);}
+  nav ul{display:flex;gap:26px;list-style:none;}
+  nav ul a{
+    font-family:'Share Tech Mono', monospace;font-size:12px;letter-spacing:.14em;
+    color:var(--muted);text-decoration:none;text-transform:uppercase;
+  }
+  nav ul a:hover{color:var(--cobalt-soft);}
+
+  /* ---------- hero ---------- */
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px;}
+  header.hero{padding:72px 0 40px;position:relative;}
+  .eyebrow{
+    font-family:'Share Tech Mono', monospace;font-size:12px;letter-spacing:.3em;
+    color:var(--cobalt-soft);text-transform:uppercase;margin-bottom:18px;
+  }
+  h1{
+    font-size:clamp(44px, 7vw, 84px);
+    font-weight:600;line-height:1.02;letter-spacing:-.01em;
+    max-width:14ch;
+  }
+  h1 em{font-style:italic;font-weight:500;color:var(--cobalt-soft);}
+  .hero-sub{
+    max-width:56ch;color:var(--muted);font-size:21px;margin-top:22px;font-weight:400;
+  }
+  .hero-chart{
+    margin-top:44px;border:1px solid var(--line);border-radius:var(--radius);
+    background:var(--panel);padding:14px 14px 8px;
+  }
+  .hero-chart .label{
+    display:flex;justify-content:space-between;
+    font-family:'Share Tech Mono', monospace;font-size:11px;letter-spacing:.14em;
+    color:var(--muted);text-transform:uppercase;padding:0 4px 8px;
+  }
+  canvas{display:block;width:100%;height:180px;}
+
+  /* ---------- statement / timeline ---------- */
+  section{padding:64px 0;}
+  .sec-label{
+    font-family:'Share Tech Mono', monospace;font-size:12px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--cobalt);margin-bottom:16px;
+  }
+  h2{font-size:clamp(30px,4.4vw,46px);font-weight:600;line-height:1.12;max-width:24ch;}
+  .statement{
+    border-left:3px solid var(--cobalt);
+    padding:6px 0 6px 26px;margin-top:26px;
+    font-size:clamp(21px,2.6vw,27px);
+    font-weight:500;line-height:1.5;max-width:60ch;
+  }
+  .statement em{color:var(--cobalt-soft);}
+  .statement-note{color:var(--muted);margin-top:16px;max-width:60ch;}
+
+  .timeline{
+    margin-top:38px;border:1px solid var(--line);border-radius:var(--radius);
+    background:var(--panel);padding:26px 22px 18px;
+  }
+  .tl-track{display:flex;gap:5px;height:14px;border-radius:7px;overflow:hidden;margin-bottom:14px;}
+  .tl-track div{flex:1;}
+  .tl-track .on{background:linear-gradient(180deg,var(--cobalt),#2749B8);}
+  .tl-track .off{background:var(--line);}
+  .tl-legend{
+    display:flex;gap:24px;flex-wrap:wrap;
+    font-family:'Share Tech Mono', monospace;font-size:11px;letter-spacing:.12em;
+    color:var(--muted);text-transform:uppercase;
+  }
+  .dot{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:7px;vertical-align:1px;}
+  .dot.on{background:var(--cobalt);}
+  .dot.off{background:var(--line);}
+
+  /* ---------- philosophy ---------- */
+  .philos{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:34px;}
+  .philos p{color:var(--muted);font-size:19px;}
+  .philos p strong{color:var(--text);font-weight:600;}
+
+  /* ---------- concepts ---------- */
+  .concepts{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:36px;}
+  .card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    background:var(--panel);padding:26px 24px 24px;
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .card:hover{border-color:var(--cobalt);transform:translateY(-3px);}
+  .card .tick{
+    font-family:'Share Tech Mono', monospace;font-size:11px;letter-spacing:.2em;
+    color:var(--cobalt-soft);text-transform:uppercase;margin-bottom:12px;display:block;
+  }
+  .card h3{font-size:25px;font-weight:600;margin-bottom:10px;line-height:1.2;}
+  .card p{color:var(--muted);font-size:17px;}
+
+  /* ---------- disclosures ---------- */
+  .disclosure{
+    border:1px solid var(--line);border-radius:var(--radius);
+    background:var(--panel-2);
+    font-family:'Share Tech Mono', monospace;
+    font-size:13px;line-height:1.75;color:var(--muted);
+    padding:30px 28px;margin-top:34px;
+  }
+  .disclosure h3{
+    font-family:'Share Tech Mono', monospace;font-size:12px;letter-spacing:.26em;
+    color:var(--down);text-transform:uppercase;margin-bottom:18px;
+  }
+  .disclosure p{margin-bottom:14px;}
+  .disclosure p:last-child{margin-bottom:0;}
+  .disclosure b{color:var(--text);font-weight:400;}
+
+  footer{
+    border-top:1px solid var(--line);padding:34px 0 48px;margin-top:40px;
+    font-family:'Share Tech Mono', monospace;font-size:12px;letter-spacing:.12em;
+    color:var(--muted);
+  }
+  footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+
+  @media (max-width:720px){
+    nav ul{display:none;}
+    .philos{grid-template-columns:1fr;}
+    section{padding:48px 0;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ticker-inner{animation:none;}
+    .card:hover{transform:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="tickerbar" aria-hidden="true">
+  <div class="ticker-inner">
+    <span>PATIENCE <span class="u">▲</span></span>
+    <span>RISK MANAGEMENT <span class="u">▲</span></span>
+    <span>FOMO <span class="d">▼</span></span>
+    <span>PROCESS OVER OUTCOME <span class="u">▲</span></span>
+    <span>OVERLEVERAGE <span class="d">▼</span></span>
+    <span>JOURNALING <span class="u">▲</span></span>
+    <span>REVENGE TRADING <span class="d">▼</span></span>
+    <span>REST &amp; BREAKS <span class="u">▲</span></span>
+    <span>PATIENCE <span class="u">▲</span></span>
+    <span>RISK MANAGEMENT <span class="u">▲</span></span>
+    <span>FOMO <span class="d">▼</span></span>
+    <span>PROCESS OVER OUTCOME <span class="u">▲</span></span>
+    <span>OVERLEVERAGE <span class="d">▼</span></span>
+    <span>JOURNALING <span class="u">▲</span></span>
+    <span>REVENGE TRADING <span class="d">▼</span></span>
+    <span>REST &amp; BREAKS <span class="u">▲</span></span>
+  </div>
+</div>
+
+<nav>
+  <a class="brand" href="#top"><b>Z</b>·CONCEPTS</a>
+  <ul>
+    <li><a href="#journey">Journey</a></li>
+    <li><a href="#perspective">Perspective</a></li>
+    <li><a href="#concepts">Concepts</a></li>
+    <li><a href="#disclosures">Disclosures</a></li>
+  </ul>
+</nav>
+
+<div class="wrap" id="top">
+
+  <header class="hero">
+    <p class="eyebrow">Zachary's Investing &amp; Trading Concepts</p>
+    <h1>Ease into the markets. <em>Slowly.</em></h1>
+    <p class="hero-sub">
+      A different perspective on how to gradually work toward potential participation
+      in financial instruments — built on study, patience, and knowing when to step away.
+    </p>
+    <div class="hero-chart">
+      <div class="label"><span>STUDY / SESSION VIEW</span><span>1D · SIMULATED</span></div>
+      <canvas id="chart" width="1000" height="180" aria-label="Decorative simulated candlestick chart" role="img"></canvas>
+    </div>
+  </header>
+
+  <section id="journey">
+    <p class="sec-label">The Journey</p>
+    <h2>Six years of following the markets — breaks included.</h2>
+    <div class="statement">
+      I have been following my passion for market participation for an estimated total
+      of <em>over six years</em>, with breaks in between — breaks which are <em>needed</em>.
+    </div>
+    <p class="statement-note">
+      Stepping away isn't quitting. Rest resets perspective, protects capital, and protects
+      you. The gaps in this journey are part of the process, not interruptions to it.
+    </p>
+    <div class="timeline" aria-label="Timeline of active study periods and intentional breaks">
+      <div class="tl-track" aria-hidden="true">
+        <div class="on"></div><div class="on"></div><div class="off"></div>
+        <div class="on"></div><div class="on"></div><div class="on"></div>
+        <div class="off"></div><div class="on"></div><div class="off"></div>
+        <div class="on"></div><div class="on"></div><div class="on"></div>
+      </div>
+      <div class="tl-legend">
+        <span><span class="dot on"></span>Active study &amp; participation</span>
+        <span><span class="dot off"></span>Intentional break</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="perspective">
+    <p class="sec-label">The Perspective</p>
+    <h2>You don't have to rush in. You don't have to be in at all.</h2>
+    <div class="philos">
+      <p>
+        Most market content pushes urgency — act now, don't miss out, get in early.
+        This is the opposite. <strong>The goal here is to slow the process down:</strong>
+        observe first, simulate second, and only then consider whether real participation
+        in financial instruments fits your life, your finances, and your temperament.
+      </p>
+      <p>
+        <strong>Participation is potential, not required.</strong> Watching price action,
+        running back tests, and studying structure are complete activities on their own.
+        If you ever do participate, it should be with money you can afford to lose,
+        an amount that lets you sleep, and a plan for taking breaks.
+      </p>
+    </div>
+  </section>
+
+  <section id="concepts">
+    <p class="sec-label">Z Concepts</p>
+    <h2>The study framework.</h2>
+    <div class="concepts">
+      <div class="card">
+        <span class="tick">ZC-01 / PA</span>
+        <h3>Price Action Review</h3>
+        <p>Reading raw market movement — structure, momentum, and behavior around key levels — before layering on any indicators.</p>
+      </div>
+      <div class="card">
+        <span class="tick">ZC-02 / BT</span>
+        <h3>Back Test Simulation</h3>
+        <p>Replaying historical data to pressure-test an idea before risking anything real. Simulation first, always.</p>
+      </div>
+      <div class="card">
+        <span class="tick">ZC-03 / OB</span>
+        <h3>Order Book Analysis</h3>
+        <p>Studying the depth of bids and asks to understand where liquidity sits and how participants position themselves.</p>
+      </div>
+      <div class="card">
+        <span class="tick">ZC-04 / MM</span>
+        <h3>Micro &amp; Macro Analytics</h3>
+        <p>Zooming between the small picture — individual setups — and the big picture: rates, cycles, and global context.</p>
+      </div>
+      <div class="card">
+        <span class="tick">ZC-05 / CT</span>
+        <h3>Miscellaneous Charting Techniques</h3>
+        <p>Exploring the toolbox — timeframes, drawing tools, and visualization methods — to find what actually clarifies rather than clutters.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="disclosures">
+    <p class="sec-label">Disclosures</p>
+    <h2>Read this before anything else.</h2>
+    <div class="disclosure">
+      <h3>⚠ Important Disclosures</h3>
+      <p><b>Not financial advice.</b> All content on this site is for educational and informational purposes only. Nothing here constitutes financial, investment, legal, or tax advice, or a recommendation to buy, sell, or hold any financial instrument.</p>
+      <p><b>Not a professional.</b> I am not a licensed financial advisor, broker, or registered investment professional. This site documents a personal passion and perspective — nothing more.</p>
+      <p><b>Risk of loss.</b> Trading and investing in financial instruments — including stocks, options, futures, forex, and cryptocurrencies — involves substantial risk, up to and including the loss of your entire investment. Never participate with money you cannot afford to lose.</p>
+      <p><b>Past performance.</b> Past performance, back tests, and simulations are not indicative of future results. Simulated results have inherent limitations and do not reflect real market conditions such as slippage, liquidity, and emotion.</p>
+      <p><b>Do your own research.</b> Always conduct your own due diligence and consult a licensed financial professional before making any financial decision. Your circumstances are unique, and what fits one person may be entirely wrong for another.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="row">
+      <span>Z·CONCEPTS — ZACHARY'S INVESTING &amp; TRADING CONCEPTS</span>
+      <span>EDUCATIONAL ONLY · NOT FINANCIAL ADVICE</span>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // Decorative simulated candlestick chart — random walk, no real data.
+  (function(){
+    const cv = document.getElementById('chart');
+    const ctx = cv.getContext('2d');
+    const W = cv.width, H = cv.height;
+    const styles = getComputedStyle(document.documentElement);
+    const UP = styles.getPropertyValue('--up').trim();
+    const DOWN = styles.getPropertyValue('--down').trim();
+    const LINE = styles.getPropertyValue('--line').trim();
+
+    // grid
+    ctx.strokeStyle = LINE; ctx.lineWidth = 1;
+    for (let y = 30; y < H; y += 38){
+      ctx.beginPath(); ctx.moveTo(0, y + .5); ctx.lineTo(W, y + .5); ctx.stroke();
+    }
+
+    // random-walk candles
+    const n = 46, cw = W / n, bw = Math.max(3, cw * .5);
+    let price = H * .62;
+    for (let i = 0; i < n; i++){
+      const drift = (Math.random() - .47) * 26;
+      const open = price;
+      const close = Math.min(H - 18, Math.max(18, price + drift));
+      const hi = Math.min(open, close) - Math.random() * 14;
+      const lo = Math.max(open, close) + Math.random() * 14;
+      const x = i * cw + cw / 2;
+      const up = close <= open; // canvas y is inverted
+      ctx.strokeStyle = ctx.fillStyle = up ? UP : DOWN;
+      ctx.beginPath(); ctx.moveTo(x, hi); ctx.lineTo(x, lo); ctx.stroke();
+      const top = Math.min(open, close);
+      ctx.fillRect(x - bw / 2, top, bw, Math.max(2, Math.abs(close - open)));
+      price = close;
+    }
+  })();
+</script>
+
+</body>
+</html>
